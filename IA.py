@@ -16,6 +16,12 @@ def crear_usuario_groq():
     clave_secreta = st.secrets["CLAVE_API"]
     return Groq(api_key=clave_secreta)
 
+def inicializar_estado():
+    if "mensajes" not in st.session_state:
+        st.session_state.mensajes = []
+        
+inicializar_estado()
+
 
 def actualizar_historial(rol, contenido, avatar):
     st.session_state.mensajes.append({"role": rol, "content": contenido, "avatar":avatar})
@@ -27,9 +33,7 @@ def configurar_modelo(cliente, modelo, mensaje):
         stream=True
     )
 
-def inicializar_estado():
-    if "mensajes" not in st.session_state:
-        st.session_state.mensajes = []
+
 
 def mostrar_historial():
     for mensaje in st.session_state.mensajes:
